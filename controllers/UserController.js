@@ -204,7 +204,6 @@ const updateUser = (req, res) => {
             params.password = pwd;
         }
 
-
         User.findByIdAndUpdate({_id: identity.id}, params, {new: true})
             .then((userEdit) => {
                 return res.status(200).json({

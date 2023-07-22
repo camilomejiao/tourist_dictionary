@@ -18,6 +18,10 @@ const CustomerSchema = Schema({
         type: String,
         required: false
     },
+    phone_number: {
+        type: String,
+        required: false
+    },
     department_id: {
         type: Schema.ObjectId,
         ref: "Department",

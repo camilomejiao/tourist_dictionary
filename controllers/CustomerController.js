@@ -168,7 +168,7 @@ const deleteCustomer = (req, res) => {
 }
 
 const searchCustomerByDepartmentOrMuni = (req, res) => {
-    console.log(req.query);
+    //console.log(req.query);
     let q = req.query.q;
     let c = req.query.c;
     let depa = req.query.depa;

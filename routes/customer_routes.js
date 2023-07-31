@@ -57,12 +57,12 @@ const uploadArrayImage = upload.fields(
 
 api.post("/save-customer", [auth.auth, uploadArrayImage], CustomerController.saveCustomer);
 api.get('/customer/:id', [auth.auth], CustomerController.listCustomer);
-api.get('/list-customers/:page?/:limit?', [auth.auth], CustomerController.listCustomers);
+api.get('/list-customers/:page?/:limit?', CustomerController.listCustomers);
 api.delete('/customer-delete/:id', [auth.auth], CustomerController.deleteCustomer);
 api.put('/update-customer/:id', [auth.auth, uploadArrayImage], CustomerController.updateCustomer);
 
 //
-api.get("/search-customer", [auth.auth], CustomerController.searchCustomerByDepartmentOrMuni);
+api.get("/search-customer", CustomerController.searchCustomerByDepartmentOrMuni);
 
 //Export
 module.exports = api;

@@ -5,6 +5,6 @@ const DepartmentMunicipalityController = require("../controllers/DepartmentMunic
 
 //
 api.get("/get-depa", [auth.auth], DepartmentMunicipalityController.getDepartments);
-api.get("/get-muni/:id", [auth.auth], DepartmentMunicipalityController.getMunicipality);
+api.get("/get-muni/:id?", [auth.auth], DepartmentMunicipalityController.getMunicipality);
 
 module.exports = api;

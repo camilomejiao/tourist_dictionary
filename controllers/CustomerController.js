@@ -171,29 +171,30 @@ const searchCustomerByDepartmentOrMuni = (req, res) => {
     //console.log(req.query);
     let q = req.query.q;
     let c = req.query.c;
-    let depa = req.query.depa;
     let muni = req.query.muni;
 
     let search = [];
+    let params_to_search = {};
     if(q !== '' && q != undefined) {
         search = [{company_name: {"$regex": q, "$options": "i" }}];
     } else if (c !== '' && c != undefined) {
         search = [{category_id: c}];
-    } else {
-        search = [
-            {department_id: depa},
-            {municipality_id: muni}
-        ];
+    } else if (muni !== '' && muni != undefined) {
+        search = [{municipality_id: muni}];
     }
-    //console.log(search);
 
-    Customer.find({ "$or": search})
+    if(search && search.length > 0) {
+        params_to_search = { "$or": search}
+    }
+    //console.log('params_to_search: ', params_to_search);
+
+    Customer.find(params_to_search)
         .sort({date: -1})
         .then( (foundArticles) => {
             if (foundArticles.length === 0) {
                 return res.status(404).send({
                     status: "no found",
-                    message: "No se encontró clientes " + search,
+                    message: "No se encontró clientes " + search[0],
                 });
             } else {
                 return res.status(200).send({

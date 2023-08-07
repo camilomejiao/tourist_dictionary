@@ -29,41 +29,41 @@ const getDepartments = (req, res) => {
 /** Funcion para obtener todos los municipios **/
 const getMunicipality = (req, res) => {
     let id = req.params.id;
+    let q = req.query.q;
 
-    if(id) {
-        let department_id = {};
-        if(id !== undefined) {
-            department_id =  { department_id: id };
-        }
-
-        Municipality.find(department_id )
-            .populate('department_id', 'department')
-            .then((municipality) => {
-                if(municipality == 0) {
-                    return res.status(404).send({
-                        status: 'err',
-                        message: 'No hay municipios'
-                    });
-                } else {
-                    return res.status(200).send({
-                        status: "success",
-                        municipality: municipality
-                    });
-                }
-            }).catch((err) => {
-            console.log(err);
-            return res.status(500).send({
-                status: err,
-                message: "Error en la petición",
-            });
-        });
-    } else {
-        return res.status(400).send({
-            status: "err",
-            message: "El id es obligatorio",
-        });
+    let search = [];
+    let params_to_search = {};
+    if(q !== '' && q != undefined) {
+        search = [{municipality_name: {"$regex": q, "$options": "i" }}];
+    } else if(id !== undefined) {
+        search =  [{department_id: id}];
     }
 
+    if(search && search.length > 0) {
+        params_to_search = { "$or": search}
+    }
+
+    Municipality.find(params_to_search)
+        .populate('department_id', 'department')
+        .then((municipality) => {
+            if(municipality == 0) {
+                return res.status(404).send({
+                    status: 'err',
+                    message: 'No hay municipios'
+                });
+            } else {
+                return res.status(200).send({
+                    status: "success",
+                    municipality: municipality
+                });
+            }
+        }).catch((err) => {
+        console.log(err);
+        return res.status(500).send({
+            status: err,
+            message: "Error en la petición",
+        });
+    });
 
 }
 

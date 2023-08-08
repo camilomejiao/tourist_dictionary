@@ -22,6 +22,10 @@ const CustomerSchema = Schema({
         type: String,
         required: false
     },
+    email: {
+        type: String,
+        required: false
+    },
     municipality_id: {
         type: Schema.ObjectId,
         ref: "Municipality",

@@ -43,6 +43,9 @@ const getMunicipality = (req, res) => {
         params_to_search = { "$or": search}
     }
 
+    //console.log('search: ', search);
+    //console.log('params_to_search: ', params_to_search);
+
     Municipality.find(params_to_search)
         .populate('department_id', 'department')
         .then((municipality) => {

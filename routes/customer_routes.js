@@ -60,6 +60,8 @@ api.get('/customer/:id', [auth.auth], CustomerController.listCustomer);
 api.get('/list-customers/:page?/:limit?', CustomerController.listCustomers);
 api.delete('/customer-delete/:id', [auth.auth], CustomerController.deleteCustomer);
 api.put('/update-customer/:id', [auth.auth, uploadArrayImage], CustomerController.updateCustomer);
+api.get(`/image/:file`, CustomerController.getAvatarImage);
+api.get(`/file/:file`, CustomerController.getFileRTF);
 
 //
 api.get("/search-customer", CustomerController.searchCustomerByDepartmentOrMuni);

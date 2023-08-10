@@ -1,5 +1,6 @@
 const Customer =  require("../models/Customer");
 const fs = require("fs");
+const path = require("path");
 
 const saveCustomer = (req, res) => {
     const params = req.body;
@@ -254,11 +255,45 @@ const updateCustomer = (req, res) => {
     }
 }
 
+const getAvatarImage = (req, res) => {
+    const file = req.params.file;
+    const filePath = "./uploads/customer/"+file;
+
+    fs.stat(filePath, (error, exist) => {
+        if(!exist) {
+            return res.status(404).json({
+                status: "error",
+                message: "No existe imagen!"
+            });
+        } else {
+            return res.sendFile(path.resolve(filePath));
+        }
+    });
+}
+
+const getFileRTF = (req, res) => {
+    const file = req.params.file;
+    const filePath = "./uploads/file_rtf/"+file;
+
+    fs.stat(filePath, (error, exist) => {
+        if(!exist) {
+            return res.status(404).json({
+                status: "error",
+                message: "No existe archivo!"
+            });
+        } else {
+            return res.sendFile(path.resolve(filePath));
+        }
+    });
+}
+
 module.exports = {
     saveCustomer,
     listCustomers,
     listCustomer,
     deleteCustomer,
     searchCustomerByDepartmentOrMuni,
-    updateCustomer
+    updateCustomer,
+    getAvatarImage,
+    getFileRTF
 }

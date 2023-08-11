@@ -8,7 +8,7 @@ const saveCustomer = (req, res) => {
     //console.log(req.file, req.files);
 
      if(!params.company_name || !params.identification || !params.name ||
-        !params.department_id || !params.municipality_id || !params.category_id) {
+        !params.municipality_id || !params.category_id) {
 
          if(req.files){
              Object.entries(req.files).forEach(entry => {

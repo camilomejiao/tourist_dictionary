@@ -27,9 +27,6 @@ const bucketImages = multer.diskStorage({
 
 const upload = multer({
     storage: bucketImages,
-    limits: {
-        fileSize: 1048576
-    },
     fileFilter: (req, file, cb) => {
         if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "application/pdf") {
             cb(null, true);

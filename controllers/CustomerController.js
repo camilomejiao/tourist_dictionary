@@ -10,7 +10,7 @@ const saveCustomer = (req, res) => {
      if(!params.company_name || !params.identification || !params.name ||
         !params.municipality_id || !params.category_id) {
 
-         if(req.files){
+         if(req.files) {
              Object.entries(req.files).forEach(entry => {
                  const [key, item] = entry;
                  fs.unlink(item[0].path, (err) => {});
@@ -21,56 +21,30 @@ const saveCustomer = (req, res) => {
              message: "Faltan campos obligatorios"
          });
      } else {
-         Customer.find({ $or:
-                 [
-                     {company_name: params.company_name},
-                     {identification: params.identification},
-                 ]
-         }).then((customerFound) => {
-             if (customerFound && customerFound.length >= 1) {
-                 if(req.files){
-                     Object.entries(req.files).forEach(entry => {
-                         const [key, item] = entry;
-                         fs.unlink(item[0].path, (err) => {});
-                     });
-                 }
-                 return res.status(400).json({
-                     status: "error",
-                     message: "Cliente ya existe en el sistema"
-                 });
-             } else {
-                 if(req.files) {
-                     Object.entries(req.files).forEach(entry => {
-                         const [key, item] = entry;
-                         params[item[0].fieldname] = item[0].filename;
-                         console.log('item: ', item[0]);
-                     });
-                 }
-
-                 let customer_to_save = new Customer(params);
-                 customer_to_save.save()
-                     .then((saved) => {
-                         return res.status(200).json({
-                             status: "success",
-                             message: "Guardado con exito!",
-                             customer: saved,
-                             //images: req.files
-                         });
-                     }).catch((err) => {
-                         return res.status(400).send({
-                             status: "err",
-                             message: 'No se ha guardado el usuario',
-                             err
-                         });
-                     })
-             }
-         }).catch((err) => {
-             console.log(err);
-             return res.status(500).send({
-                 status: err,
-                 message: "Error en la petición",
+         if(req.files) {
+             Object.entries(req.files).forEach(entry => {
+                 const [key, item] = entry;
+                 params[item[0].fieldname] = item[0].filename;
+                 console.log('item: ', item[0]);
              });
-         });
+         }
+
+         let customer_to_save = new Customer(params);
+         customer_to_save.save()
+             .then((saved) => {
+                 return res.status(200).json({
+                     status: "success",
+                     message: "Guardado con exito!",
+                     customer: saved,
+                     //images: req.files
+                 });
+             }).catch((err) => {
+                 return res.status(400).send({
+                     status: "err",
+                     message: 'No se ha guardado el usuario',
+                     err
+                 });
+             })
      }
 }
 

@@ -26,6 +26,18 @@ const CustomerSchema = Schema({
         type: String,
         required: false
     },
+    whatsapp: {
+        type: String,
+        required: false
+    },
+    facebook: {
+        type: String,
+        required: false
+    },
+    instagram: {
+        type: String,
+        required: false
+    },
     municipality_id: {
         type: Schema.ObjectId,
         ref: "Municipality",

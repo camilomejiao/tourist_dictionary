@@ -4,7 +4,7 @@ const path = require("path");
 
 const saveCustomer = (req, res) => {
     const params = req.body;
-    //console.log(req.body);
+    console.log(params);
     //console.log(req.file, req.files);
 
      if(!params.company_name || !params.identification || !params.name ||
